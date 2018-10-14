@@ -1,0 +1,13 @@
+[# and Question Title]
+
+Description:
+[Ctrl+C and Ctrl+V from Leetcode]
+
+Hints:
+[Put some words here to help remind how you solve it]
+
+Code:
+[Your solution]
+
+Performance:
+[We may need to put Complexity Analysis here, together with the Submission Beats Rate ]
