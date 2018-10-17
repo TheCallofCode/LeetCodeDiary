@@ -1,0 +1,52 @@
+34. Find First and Last Position of Element in Sorted Array
+
+- Description:
+Write an efficient algorithm that searches for a value in an m x n matrix. This matrix has the following properties:
+
+Integers in each row are sorted from left to right.
+The first integer of each row is greater than the last integer of the previous row.
+Example 1:
+
+Input:
+matrix = [
+  [1,   3,  5,  7],
+  [10, 11, 16, 20],
+  [23, 30, 34, 50]
+]
+target = 3
+Output: true
+Example 2:
+
+Input:
+matrix = [
+  [1,   3,  5,  7],
+  [10, 11, 16, 20],
+  [23, 30, 34, 50]
+]
+target = 13
+Output: false
+
+- Hints:
+1. Convert the matrix to be flat array, do the index calculation
+
+- Code:
+
+class Solution {
+    public boolean searchMatrix(int[][] matrix, int target) {
+        if (matrix == null || matrix.length == 0 || matrix[0].length == 0)  return false;
+        int rows = matrix.length, cols = matrix[0].length,
+		start = 0, end = rows * cols - 1, m = 0;
+        while (start <= end) {
+            m = start + (end - start) / 2;
+            if (matrix[m/cols][m%cols] == target)   return true;
+            else if (matrix[m/cols][m%cols] < target)   start = m + 1;
+            else    end = m - 1;
+        }
+        return false;
+    }
+}
+
+- Performance:
+Time: O(log n)	Space: O(1)	Beats: 98.01%
+
+
