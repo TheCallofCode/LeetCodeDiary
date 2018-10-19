@@ -33,20 +33,26 @@ Output: false
 
 class Solution {
     public boolean searchMatrix(int[][] matrix, int target) {
-        if (matrix == null || matrix.length == 0 || matrix[0].length == 0)  return false;
+        if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {
+	    return false;
+	}
         int rows = matrix.length, cols = matrix[0].length,
 		start = 0, end = rows * cols - 1, m = 0;
         while (start <= end) {
             m = start + (end - start) / 2;
-            if (matrix[m/cols][m%cols] == target)   return true;
-            else if (matrix[m/cols][m%cols] < target)   start = m + 1;
-            else    end = m - 1;
+            if (matrix[m/cols][m%cols] == target) {
+		return true;
+	    } else if (matrix[m/cols][m%cols] < target) {
+		start = m + 1;
+	    } else {
+		end = m - 1;
+	    }
         }
         return false;
     }
 }
 
 - Performance:
-Time: O(log n)	Space: O(1)	Beats: 98.01%
+Time: O(log mn)	Space: O(1)	Beats: 98.01%
 
 
