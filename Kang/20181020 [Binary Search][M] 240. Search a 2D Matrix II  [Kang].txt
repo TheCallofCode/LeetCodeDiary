@@ -1,0 +1,77 @@
+240. Search a 2D Matrix II 
+
+Description:
+Write an efficient algorithm that searches for a value in an m x n matrix. This matrix has the following properties:
+Integers in each row are sorted in ascending from left to right.
+Integers in each column are sorted in ascending from top to bottom.
+Example:
+Consider the following matrix:
+[
+  [1,   4,  7, 11, 15],
+  [2,   5,  8, 12, 19],
+  [3,   6,  9, 16, 22],
+  [10, 13, 14, 17, 24],
+  [18, 21, 23, 26, 30]
+]
+Given target = 5, return true.
+Given target = 20, return false.
+
+Hints:
+
+Code:
+class Solution:
+    def searchMatrix(self, matrix, target):
+        """
+        :type matrix: List[List[int]]
+        :type target: int
+        :rtype: bool
+        """
+        def devidConquer(matrix,ul,lr,target):
+            if ul[0] == lr[0] and ul[1]== lr[1]:
+                if matrix[ul[0]][ul[1]] == target:
+                    return True
+                else:
+                    return False
+            elif ul[0] > lr[0] or ul[1] > lr[1]:
+                return False
+            elif target < matrix[ul[0]][ul[1]] or target > matrix[lr[0]][lr[1]]:
+                return False
+            mid = [ul[0]+(lr[0]-ul[0])//2, ul[1]+(lr[1]-ul[1])//2]
+            if(target == matrix[mid[0]][mid[1]]):
+                return True
+            elif (target > matrix[mid[0]][mid[1]]):
+                return devidConquer(matrix,[mid[0]+1,mid[1]+1],lr,target) or devidConquer(matrix,[mid[0]+1,ul[1]],[lr[0],mid[1]],target) or devidConquer(matrix,[ul[0],mid[1]+1],[mid[0],lr[1]],target)
+            else:
+                return devidConquer(matrix,ul,[mid[0]-1,mid[1]-1],target) or devidConquer(matrix,[mid[0],ul[1]],[lr[0],mid[1]-1],target) or devidConquer(matrix,[ul[0],mid[1]],[mid[0]-1,lr[1]],target)
+        if len(matrix)==0 or len(matrix[0])==0:
+            return False
+        ul = [0,0]
+        lr = [len(matrix)-1,len(matrix[0])-1]
+        return devidConquer(matrix,ul,lr,target)
+
+Performance:
+Time Complaxity: O((MN)log4(3)), Space Complaxity: O(MN)?  Beats: 17%-99%
+
+Code:
+class Solution:
+    def searchMatrix(self, matrix, target):
+        """
+        :type matrix: List[List[int]]
+        :type target: int
+        :rtype: bool
+        """
+        if not matrix or not len(matrix) or not len(matrix[0]):
+            return False
+        m, n = len(matrix), len(matrix[0])
+        i, j = 0, n - 1
+        while i < m and j >= 0:
+            if matrix[i][j] == target:
+                return True  
+            if matrix[i][j] > target:
+                j -= 1
+            else:
+                i += 1
+        return False
+
+Performance:
+Time Complaxity: O(M+N), Space Complaxity: O(1)  Beats: 99%

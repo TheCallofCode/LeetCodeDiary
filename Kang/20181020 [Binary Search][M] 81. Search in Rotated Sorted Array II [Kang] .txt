@@ -1,0 +1,51 @@
+81. Search in Rotated Sorted Array II
+
+Description:
+Suppose an array sorted in ascending order is rotated at some pivot unknown to you beforehand.
+(i.e., [0,0,1,2,2,5,6] might become [2,5,6,0,0,1,2]).
+You are given a target value to search. If found in the array return true, otherwise return false.
+Example 1:
+Input: nums = [2,5,6,0,0,1,2], target = 0
+Output: true
+Example 2:
+Input: nums = [2,5,6,0,0,1,2], target = 3
+Output: false
+
+Hints:
+if target - nums[i] in hash:
+
+Code:
+class Solution:
+    def search(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: bool
+        """
+        if not nums:
+            return False
+        left = 0
+        right = len(nums)-1
+        while left < right:
+            mid = left+(right-left)//2
+            if target == nums[mid]:
+                return True
+            if nums[left] < nums[mid]:
+                if nums[left]<=target<nums[mid]:
+                    right = mid
+                else:
+                    left = mid+1
+            elif nums[left] > nums[mid]:
+                if nums[mid] < target <= nums[right]:
+                    left = mid+1
+                else:
+                    right = mid    
+            else:
+                left +=1
+        if nums[left] == target:
+            return True
+        else:
+            return False
+
+Performance:
+Time Complaxity: O(logn), Space Complaxity: O(1)  Beats: 99%
