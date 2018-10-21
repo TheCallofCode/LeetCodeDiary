@@ -1,0 +1,112 @@
+#33. Search in Rotated Sorted Array
+https://leetcode.com/problems/search-in-rotated-sorted-array/description/
+
+code: (very ugly, needs refining)
+class Solution {
+public:
+    int search(vector<int>& nums, int target) {
+        if (nums.size() == 0) return - 1;
+        if (nums.size() <= 2){
+            for (int i = 0; i < nums.size(); i++){
+                if (nums[i] == target) return i;
+            }
+            return -1;
+        }
+                
+        // find the pivot
+        int lo = 0; 
+        int hi = nums.size()-2;
+        int last = nums[hi+1];
+        while (lo + 1 < hi){
+            int mid = (lo + hi) / 2;
+            if (nums[mid] > last){
+                lo = mid;
+            }
+            else{
+                hi = mid;
+            }
+        }
+        
+        cout<<lo<<hi;
+        int pivotIdx = -1;
+        
+        if (lo > 0 &&  nums[lo - 1] > nums[lo]) pivotIdx = lo - 1;
+        if (nums[lo] > nums[lo + 1])  pivotIdx = lo;
+        if (nums[hi] > nums[hi + 1])  pivotIdx = hi;
+        cout<<pivotIdx;
+        // find the target
+        if (pivotIdx == -1){
+            lo = 0;
+            hi = nums.size() - 1;
+        }else if (target <= last){
+            lo = pivotIdx + 1;
+            hi = nums.size()-1;
+        }
+        else{
+            lo = 0;
+            hi = pivotIdx;
+        }
+        
+        cout<<endl<<lo<<hi;
+        
+        while (lo + 1 < hi){
+            int mid = (lo + hi) / 2;
+            if (nums[mid] > target){
+                hi = mid;
+            }
+            else{
+                lo = mid;
+            }
+        }
+        
+        if (nums[lo] == target) return lo;
+        if (nums[hi] == target) return hi;
+        
+        return -1;
+        
+    }
+};
+
+#34. Find First and Last Position of Element in Sorted Array
+https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/description/
+
+Code: (wordy code)
+class Solution {
+public:
+    vector<int> searchRange(vector<int>& nums, int target) {
+        if (nums.size() == 0) return {-1,-1};
+        
+        int left = -1, right = -1;
+        
+        // find the right one;
+        int lo = 0;
+        int hi = nums.size()-1;
+        while (lo < hi - 1){
+            int mid = (lo + hi) / 2;
+            (nums[mid] > target) ? hi = mid : lo = mid;
+        }
+        
+        if (nums[hi] == target) {
+            right = hi;
+        }else{
+            if (nums[lo] == target) right = lo;
+        }
+                
+        // find the left one;
+        lo = 0;
+        hi = nums.size()-1;
+        while (lo < hi - 1){
+            int mid = (lo + hi)/2;
+            (nums[mid] < target) ? lo = mid : hi = mid;
+        }
+        
+        if (nums[lo] == target) {
+            left = lo;
+        }else{
+            if (nums[hi] == target) left = hi;
+        }
+        
+        return {left,right};
+    }
+};
+
