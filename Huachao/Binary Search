@@ -110,3 +110,21 @@ public:
     }
 };
 
+##35. Search Insert Position
+https://leetcode.com/problems/search-insert-position/description/
+
+Code: (using map)
+class Solution {
+public:
+    int searchInsert(vector<int>& nums, int target) {
+        map<int,int> bsMap;
+        for (int i = 0; i < nums.size(); i++){
+            bsMap.insert({nums[i],i});
+        }
+                
+        map<int,int>::iterator it = bsMap.lower_bound(target);
+        if (it==bsMap.end()) return nums.size();
+        return it->second;
+    }
+};
+
