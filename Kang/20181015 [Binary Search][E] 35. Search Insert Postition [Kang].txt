@@ -29,7 +29,7 @@ class Solution:
         """
         left = 0
         right = len(nums)-1
-        if target < nums[left]:
+        if target <= nums[left]:
             return left
         elif target > nums[right]:
             return right+1
