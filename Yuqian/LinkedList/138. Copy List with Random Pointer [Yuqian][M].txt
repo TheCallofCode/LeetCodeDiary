@@ -1,0 +1,64 @@
+138. Copy List with Random Pointer
+
+- Description:
+
+A linked list is given such that each node contains an additional random pointer which could point to any node in the list or null.
+
+Return a deep copy of the list.
+
+- Hints: If no random pointer, we just create -> copy next node. But random can be some node exists already. So think about use a map, which key is the node address in the old list, value is the correlated node address in the new list.
+
+- Code:
+
+/**
+ * Definition for singly-linked list with a random pointer.
+ * class RandomListNode {
+ *     int label;
+ *     RandomListNode next, random;
+ *     RandomListNode(int x) { this.label = x; }
+ * };
+ */
+public class Solution {
+    public RandomListNode copyRandomList(RandomListNode head) {
+        if (head == null) {
+            return null;            
+        }
+        RandomListNode newHead = new RandomListNode(head.label); // head of the new list
+        RandomListNode cur = newHead; // cursor to construct new list
+        RandomListNode next, random; // next and random pointer of old list
+        Map<RandomListNode, RandomListNode> map = new HashMap<>();
+        map.put(head, newHead);
+        while (head != null) { // head is the cursor to traverse old list
+            next = head.next; // set next pointer
+            if (next != null) {
+                RandomListNode newNext; // point to (if exist) or construct and point to new copy of next node
+                if (map.containsKey(next)) {
+                    newNext = map.get(next);                
+                } else {
+                    newNext = new RandomListNode(next.label);
+                    map.put(next, newNext);
+                }
+                cur.next = newNext; // add next node for new list
+            }
+            
+            random = head.random; // set random pointer
+            if (random != null) {
+                RandomListNode newRandom; // point to (if exist) or construct and point to new copy of random node
+                if (map.containsKey(random)) {
+                    newRandom = map.get(random);
+                } else {
+                    newRandom = new RandomListNode(random.label);
+                    map.put(random, newRandom);
+                }
+                cur.random = newRandom;
+            }
+            cur = cur.next; // Don't forget to move both cursor
+            head = head.next; // Don't forget to move both cursor
+        }
+        return newHead;
+    }
+}
+
+Time: O(n)	Space: O(n)	Beats: 63.19%
+
+

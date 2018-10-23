@@ -1,0 +1,53 @@
+206. Reverse Linked List
+
+- Description:
+Reverse a singly linked list.
+
+Example:
+
+Input: 1->2->3->4->5->NULL
+Output: 5->4->3->2->1->NULL
+Follow up:
+
+A linked list can be reversed either iteratively or recursively. Could you implement both?
+
+- Hints:
+
+- Code:
+Solution 1: Recursive
+
+class Solution {
+    public ListNode reverseList(ListNode head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+        ListNode newHead = reverseList(head.next);
+        head.next.next = head;
+        head.next = null;
+        return newHead;
+    }  
+}
+
+Time: O(n)	Space: O(1)	Beats: 100%
+
+Solution 2: Iterative
+
+class Solution {
+    public ListNode reverseList(ListNode head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+        ListNode list = head.next; // 2 -> ... -> null
+        head.next = null; // set first node from the rest
+        ListNode cur;
+        while (list != null) {
+            cur = list; // set the cursor to the next node need to be added to result list
+            list = list.next; // cut the list and memorize the next position
+            cur.next = head; // do the reverse
+            head = cur; // reset the head
+        }
+        return head;
+    }  
+}
+
+Time: O(n)	Space: O(1)	Beats: 100%
