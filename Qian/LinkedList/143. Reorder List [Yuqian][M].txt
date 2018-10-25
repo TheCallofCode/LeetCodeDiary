@@ -1,0 +1,65 @@
+143. Reorder List
+
+- Description:
+
+Given a singly linked list L: L0→L1→…→Ln-1→Ln,
+reorder it to: L0→Ln→L1→Ln-1→L2→Ln-2→…
+
+You may not modify the values in the list's nodes, only nodes itself may be changed.
+
+Example 1:
+
+Given 1->2->3->4, reorder it to 1->4->2->3.
+Example 2:
+
+Given 1->2->3->4->5, reorder it to 1->5->2->4->3.
+
+- Hints: Cut from the middle, reverse the second half, merge
+
+- Code:
+
+class Solution {
+    public void reorderList(ListNode head) {
+        if (head == null || head.next == null) {
+            return;
+        }
+        ListNode slow = head, fast = head;
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        ListNode l2 = reverse(slow.next);
+        slow.next = null;
+        merge(head, l2);
+    }
+    private ListNode reverse(ListNode head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+        ListNode newHead = reverse(head.next);
+        head.next.next = head;
+        head.next = null;
+        return newHead;
+    }
+    private ListNode merge(ListNode l1, ListNode l2) {
+        ListNode dummy = new ListNode(0);
+        ListNode cur = dummy;
+        while (l1 != null && l2 != null) {
+            cur.next = l1;
+            l1 = l1.next;
+            cur = cur.next;
+            cur.next = l2;
+            l2 = l2.next;
+            cur = cur.next;
+        }
+        if (l1 != null) {
+            cur.next = l1;
+        }
+        return dummy.next;
+    }
+}
+
+
+Time: O(n)	Space: O(1)	Beats: 56%
+
+
