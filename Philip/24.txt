@@ -1,0 +1,36 @@
+24. Swap Nodes in Pairs
+
+Description:
+Given a linked list, swap every two adjacent nodes and return its head.
+
+Example:
+
+Given 1->2->3->4, you should return the list as 2->1->4->3.
+Note:
+
+Your algorithm should use only constant extra space.
+You may not modify the values in the list's nodes, only nodes itself may be changed.
+
+Hints:
+revert a linked list
+
+Code:
+class Solution {
+	public ListNode swapPairs(ListNode head) {
+		if(head == null) return null;
+		ListNode n1 = head;
+		ListNode n2 = head.next;
+		if(n2 != null)
+		{
+			ListNode next = n2.next;
+			n2.next = n1;
+			n1.next = swapPairs(next);
+			return n2;
+		}
+		return n1;
+		
+	}
+}
+
+Performance:
+O(n) O(n) beat 27%
