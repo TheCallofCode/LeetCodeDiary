@@ -1,0 +1,50 @@
+138. Copy List with Random Pointer
+
+Description:
+A linked list is given such that each node contains an additional random pointer which could point to any node in the list or null.
+
+Return a deep copy of the list.
+
+Hints:
+There are two ways to resolve this issue:
+1, Create node copy as its neigber.
+2, Use hashmap to map every list member with new copy.
+
+Code:
+public class Solution {
+    public RandomListNode copyRandomList(RandomListNode head) {
+        if(head == null) return null;
+	    RandomListNode tmp = head;
+        while(tmp!= null)
+        {
+            RandomListNode newnode = new RandomListNode(tmp.label);
+            newnode.next = tmp.next;
+            tmp.next = newnode;	
+            tmp = newnode.next;
+        }
+        tmp = head;
+        while(tmp!=null)
+        {
+            if(tmp.random != null)
+                tmp.next.random = tmp.random.next;
+            tmp = tmp.next.next;
+        }
+        RandomListNode newhead = new RandomListNode(-1);
+        tmp = head;
+        RandomListNode tmp1 = newhead;
+        while(tmp!=null)
+        {            
+            tmp1.next = tmp.next;
+            tmp.next = tmp.next.next;
+            tmp = tmp.next;
+            tmp1 = tmp1.next;
+        }
+        tmp1.next = null;
+        
+        System.out.println();
+        return newhead.next;	
+    }
+}
+
+Performance:
+O(n) O(n) beats 99%

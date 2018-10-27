@@ -51,7 +51,7 @@ class Solution {
 		while(low<high)
 		{
 			mid = low + (high - low) / 2;
-			if(nums[mid] > target)	high = mid - 1;
+			if(nums[mid] > target)	high = mid;
 			else			low = mid + 1;
 
 		}
