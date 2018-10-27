@@ -1,0 +1,61 @@
+234. Palindrome Linked List
+
+Description:
+Given a singly linked list, determine if it is a palindrome.
+
+Example 1:
+
+Input: 1->2
+Output: false
+Example 2:
+
+Input: 1->2->2->1
+Output: true
+Follow up:
+Could you do it in O(n) time and O(1) space?
+
+Hints:
+Go to mid point and revert list.
+
+Code:
+class Solution {
+    public boolean isPalindrome(ListNode head) {
+        if(head == null)
+            return true;
+        if(head.next == null)
+            return true;
+        //if(head.next.next == null)
+        //{
+        //    return head.val == head.next.val;
+        //}
+        ListNode slow = head, fast = head;
+        int count = 0;
+        while(fast != null && fast.next != null)
+        {
+            slow = slow.next;
+            fast = fast.next.next;             
+        }
+        //System.out.println(slow.val);
+        ListNode rhead = new ListNode(-1);
+        ListNode tmp = slow;
+        while(tmp != null)
+        {
+            ListNode prev = rhead.next;
+            ListNode next = tmp;
+            tmp = tmp.next;
+            rhead.next = next;
+            next.next = prev;
+        }
+        while(rhead.next != null)
+        {
+            if(head.val != rhead.next.val)
+                return false;
+            rhead = rhead.next;
+            head = head.next;
+        }
+        return true;
+    }
+}
+
+Performance:
+[We may need to put Complexity Analysis here, together with the Submission Beats Rate ]
