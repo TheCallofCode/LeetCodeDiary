@@ -326,3 +326,32 @@ public:
 };
 
 把一个简单的例子，先分析清楚。
+
+206. Reverse Linked List
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* reverseList(ListNode* head) {
+        if (!head) return NULL;
+        
+        ListNode *cur=head,*next,*tmp;
+        
+        if(cur) next = cur->next;
+        while(next){
+            tmp = next->next;
+            next->next = cur;
+            cur = next;
+            next = tmp;
+        }
+        head->next = NULL;
+        return cur;
+    }
+};
