@@ -355,3 +355,31 @@ public:
         return cur;
     }
 };
+
+
+234. Palindrome Linked List
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* tmp;
+    bool isPalindrome(ListNode* head) {
+        tmp = head;
+        return check(head);
+    }
+    
+    bool check(ListNode* p){
+        if (!p) return true;
+        
+        bool isOK = check(p->next) && (tmp->val == p->val);
+        tmp = tmp->next;
+        return isOK;
+    }
+};
