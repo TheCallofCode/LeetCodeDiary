@@ -133,3 +133,46 @@ public:
         return head;
     }
 };
+
+
+#25. Reverse Nodes in k-Group
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* reverseKGroup(ListNode* head, int k) {
+        if (!head) return NULL;
+        
+        ListNode *preHead=new ListNode(0), *pLastK=head, *pRes, *cur=head,*next=head,*tmp;
+        int num = 1; 
+        while(cur=cur->next) num++;
+        preHead->next = head;
+        pRes=preHead;
+        while (num>=k){
+            cur = head;
+            if (cur) next = cur->next;
+            
+            for (int i = 0; i < k-1; i++){
+                tmp = next->next;
+                next->next = cur;
+                cur = next;
+                next = tmp;
+            }
+            preHead->next = cur;
+            head->next = next;
+            preHead = head;
+            head = next;
+            num -= k;
+        }
+        return pRes->next;
+    }
+};
+返回结果里有 loop 也会造成超时
+
