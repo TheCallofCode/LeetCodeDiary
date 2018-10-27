@@ -1,0 +1,135 @@
+#2 Add Two Numbers
+https://leetcode.com/problems/add-two-numbers/description/
+
+Code: 
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+        ListNode preHead(0), *p = &preHead;
+        int preVal = 0;
+        while (l1||l2||preVal){
+            int sum = (l1?l1->val:0) + (l2?l2->val:0) + preVal;
+            preVal = sum/10;
+            p->next = new ListNode(sum%10);
+            p = p->next;
+            l1 = l1?l1->next:l1;
+            l2 = l2?l2->next:l2;
+        }
+        return preHead.next;
+    }
+};
+Comment: clean the code
+
+#21. Merge Two Sorted Lists
+https://leetcode.com/problems/merge-two-sorted-lists/description/
+
+Code:
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {
+        ListNode preHead(0), *p = &preHead;
+        while(l1||l2){
+            int newVal = 0;
+            if (!l2 || (l1 && l1->val < l2->val)){
+                newVal = l1->val;
+                l1 = l1->next;
+            }else {
+                newVal = l2->val;
+                l2 = l2->next;
+            }
+            p->next = new ListNode(newVal);
+            p = p->next;
+        }
+        
+        return preHead.next;
+    }
+};
+
+#23. Merge k Sorted Lists
+
+code:
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    class compare{
+        public:
+        bool operator()(const ListNode* lhs, const ListNode* rhs){
+            return lhs->val > rhs->val;
+        }
+    };
+    
+    ListNode* mergeKLists(vector<ListNode*>& lists) {
+        priority_queue<ListNode*, vector<ListNode*>, compare> minHeap;
+        ListNode preHead(0), *pNow = &preHead;
+        for (auto m:lists){
+            if (m) minHeap.push(m);
+        }
+        
+        while(!minHeap.empty()){
+            ListNode* node = minHeap.top();
+            pNow->next = new ListNode(node->val);
+            minHeap.pop();
+            if (node&&node->next) minHeap.push(node->next);
+            pNow = pNow->next;
+        }
+        return preHead.next;
+    }
+};
+
+注意priority_queue的应用，尤其compare
+
+
+#24. Swap Nodes in Pairs
+
+Code:
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* swapPairs(ListNode* head) {
+        ListNode *preHead, *p1 = head, *p2;
+        
+        if (head && head->next) head=head->next;
+        
+        while (p1&&p1->next){
+            p2 = p1->next;
+            p1->next = p2->next;
+            p2->next = p1;
+            
+            p2 = p1->next;
+            if (p1->next && p1->next->next) p1->next = p1->next->next;
+            p1 = p2;
+        }
+        
+        return head;
+    }
+};
