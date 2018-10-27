@@ -60,3 +60,43 @@ public:
         return preHead.next;
     }
 };
+
+#23. Merge k Sorted Lists
+
+code:
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    class compare{
+        public:
+        bool operator()(const ListNode* lhs, const ListNode* rhs){
+            return lhs->val > rhs->val;
+        }
+    };
+    
+    ListNode* mergeKLists(vector<ListNode*>& lists) {
+        priority_queue<ListNode*, vector<ListNode*>, compare> minHeap;
+        ListNode preHead(0), *pNow = &preHead;
+        for (auto m:lists){
+            if (m) minHeap.push(m);
+        }
+        
+        while(!minHeap.empty()){
+            ListNode* node = minHeap.top();
+            pNow->next = new ListNode(node->val);
+            minHeap.pop();
+            if (node&&node->next) minHeap.push(node->next);
+            pNow = pNow->next;
+        }
+        return preHead.next;
+    }
+};
+
+注意priority_queue的应用，尤其compare
