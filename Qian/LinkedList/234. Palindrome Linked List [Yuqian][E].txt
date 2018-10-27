@@ -1,0 +1,91 @@
+234. Palindrome Linked List
+
+- Description:
+
+Given a singly linked list, determine if it is a palindrome.
+
+Example 1:
+
+Input: 1->2
+Output: false
+Example 2:
+
+Input: 1->2->2->1
+Output: true
+Follow up:
+Could you do it in O(n) time and O(1) space?
+
+- Hints: Try to make last half of the list in reversed order and then compare with first half
+
+- Code:
+
+Solution 1: use stack since it's FILO
+
+class Solution {
+    public boolean isPalindrome(ListNode head) {
+        if (head == null || head.next == null) {
+            return true;
+        }
+        if (head.next.next == null) {
+            return head.val == head.next.val;
+        }
+        Stack<Integer> s = new Stack<>();
+        ListNode slow = head, fast = head;
+        while (fast != null && fast.next != null) {
+            s.push(slow.val);
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        if (fast != null) { 
+            slow = slow.next;
+        }
+        while (slow != null && !s.isEmpty()) {
+            if (slow.val != s.pop()) {
+                return false;
+            }
+            slow = slow.next;
+        }
+        return true;
+    }
+}
+
+Time: O(n)	Space: O(n)	Beats: 22%
+
+Solution 2: reverse the list then compare
+
+class Solution {
+    public boolean isPalindrome(ListNode head) {
+        if (head == null || head.next == null) {
+            return true;
+        }
+        ListNode slow = head, fast = head;
+        while (fast != null && fast.next != null) { // find the beginning of the right half
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        if (fast != null) { // case when there is single number in the middle
+            slow = slow.next;
+        }
+        ListNode reversed = reverse(slow);
+        while (reversed != null) { // compare
+            if (reversed.val != head.val) {
+                return false;
+            }
+            reversed = reversed.next;
+            head = head.next;
+        }
+        return true;        
+    }
+    private ListNode reverse(ListNode head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+        ListNode newHead = reverse(head.next);
+        head.next.next = head;
+        head.next = null;
+        return newHead;
+    }
+}
+
+Time: O(n)	Space: O(1)	Beats: 98%
+
