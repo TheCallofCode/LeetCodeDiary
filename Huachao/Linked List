@@ -279,3 +279,50 @@ public:
     }
 };
 龟兔赛跑
+
+
+143. Reorder List
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    void reorderList(ListNode* head) {
+        if(!head) return;
+        
+        // find mid
+        ListNode *fast = head, *slow = head, *next,*tmp;
+        while(fast&&fast->next){
+            slow = slow->next;fast = fast->next->next;
+        }
+        
+        // reverse slow to end
+        next = slow->next;
+        slow->next = NULL;
+        while (slow&&next){
+            tmp = next->next;
+            next->next = slow;
+            slow = next;
+            next = tmp;
+        }
+        
+        fast = head;
+        while (fast&&slow&&fast->next){
+            tmp = fast->next;
+            fast->next = slow;
+            slow = slow->next;
+            fast->next->next = tmp;
+            fast = tmp;            
+        }
+        if (fast->next) fast->next = NULL;
+        return;
+    }
+};
+
+把一个简单的例子，先分析清楚。
