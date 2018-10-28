@@ -1,6 +1,6 @@
 # Linked List Practices
 
-### [L2 Add Two Numbers](https://leetcode.com/problems/add-two-numbers/)
+### [L2: Add Two Numbers](https://leetcode.com/problems/add-two-numbers/)
 You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order and each of their nodes contain a single digit. Add the two numbers and return it as a linked list.
 
 You may assume the two numbers do not contain any leading zero, except the number 0 itself.
@@ -56,6 +56,43 @@ class Solution {
         if(l1 == null && l2 == null && carry > 0) {
             ListNode node = new ListNode(carry);
             cur.next = node;
+        }
+        
+        return dummy.next;
+    }
+}
+```
+
+### [L24: Swap Nodes in Pairs] (https://leetcode.com/problems/swap-nodes-in-pairs/)
+Given a linked list, swap every two adjacent nodes and return its head.
+
+Example:
+
+Given 1->2->3->4, you should return the list as 2->1->4->3.
+Note:
+
+Your algorithm should use only constant extra space.
+You may not modify the values in the list's nodes, only nodes itself may be changed.
+
+```
+class Solution {
+    public ListNode swapPairs(ListNode head) {
+        if(head == null || head.next == null) {
+            return head;
+        }
+        
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode prev = dummy;
+        ListNode cur = head;
+        
+        while(prev.next != null && prev.next.next != null) {
+            prev.next = prev.next.next;
+            ListNode nextPair = prev.next.next;
+            prev.next.next = cur;
+            cur.next = nextPair;
+            prev = cur;
+            cur = cur.next;
         }
         
         return dummy.next;
