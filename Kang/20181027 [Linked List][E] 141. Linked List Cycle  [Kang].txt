@@ -1,0 +1,36 @@
+141. Linked List Cycle
+
+Description:
+Given a linked list, determine if it has a cycle in it.
+Follow up:
+Can you solve it without using extra space?
+
+Hints:
+2 pointers
+
+Code:
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+class Solution(object):
+    def hasCycle(self, head):
+        """
+        :type head: ListNode
+        :rtype: bool
+        """
+        if not head:
+            return False
+        fast,slow = head,head
+        while fast.next:
+            fast = fast.next.next
+            slow = slow.next
+            if not fast or not slow:
+                return False
+            elif fast==slow:
+                return True
+        return False
+        
+Performance:
+Time Complaxity: O(N), Space Complaxity: O(1)  Beats: 50%

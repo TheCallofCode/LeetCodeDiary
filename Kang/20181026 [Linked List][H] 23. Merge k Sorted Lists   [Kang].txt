@@ -1,0 +1,52 @@
+23. Merge k Sorted Lists
+
+Description:
+Merge k sorted linked lists and return it as one sorted list. Analyze and describe its complexity.
+Example:
+Input:
+[
+  1->4->5,
+  1->3->4,
+  2->6
+]
+Output: 1->1->2->3->4->4->5->6
+
+Hints:
+method 1 is not complete, same with method 2
+
+Code:
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+class Solution:
+    def mergeKLists(self, lists):
+        """
+        :type lists: List[ListNode]
+        :rtype: ListNode
+        """
+        reslist = []
+        for onelist in lists:
+            while(onelist):
+                reslist.append(onelist.val)
+                onelist = onelist.next
+        reslist.sort()
+        return reslist
+
+Performance:
+Time Complaxity: O(mnlogmn), Space Complaxity: O(mn)  Beats: 95%
+
+Code:
+        if len(lists) == 0 : return None
+        ls =[]
+        for oneList in lists:
+            while oneList:
+                ls.append(oneList.val)
+                oneList = oneList.next
+        ls.sort()
+        head = dumphead = ListNode(None)
+        for one in ls:
+            head.next = ListNode(one)
+            head = head.next
+        return dumphead.next

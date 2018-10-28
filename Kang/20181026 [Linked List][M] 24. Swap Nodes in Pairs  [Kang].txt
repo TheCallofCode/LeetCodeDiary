@@ -1,0 +1,40 @@
+24. Swap Nodes in Pairs
+
+Description:
+Given a linked list, swap every two adjacent nodes and return its head.
+Example:
+Given 1->2->3->4, you should return the list as 2->1->4->3.
+Note:
+Your algorithm should use only constant extra space.
+You may not modify the values in the list's nodes, only nodes itself may be changed.
+
+Hints:
+construct previous node, Pointer swap
+
+Code:
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+class Solution:
+    def swapPairs(self, head):
+        """
+        :type head: ListNode
+        :rtype: ListNode
+        """
+        if not head or head.next == None:
+            return head
+        pre = ListNode(0)
+        pre.next = head
+        cur = pre
+        while cur.next and cur.next.next:
+            nextnode = cur.next.next
+            cur.next.next = nextnode.next
+            nextnode.next = cur.next
+            cur.next = nextnode
+            cur = cur.next.next
+        return pre.next
+
+Performance:
+Time Complaxity: O(M), Space Complaxity: O(1)  Beats: 97%
