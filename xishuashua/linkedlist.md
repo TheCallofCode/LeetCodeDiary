@@ -164,3 +164,45 @@ class Solution {
     }
 }
 ```
+
+### [L138: Copy List with Random Pointer](https://leetcode.com/problems/copy-list-with-random-pointer)
+
+A linked list is given such that each node contains an additional random pointer which could point to any node in the list or null.
+
+Return a deep copy of the list.
+
+```
+public class Solution {
+    public RandomListNode copyRandomList(RandomListNode head) {
+        if(head == null) {
+            return head;
+        }
+        
+        Map<RandomListNode, RandomListNode> mapping = new HashMap<>();
+        
+        RandomListNode node = head;
+        RandomListNode dummy = new RandomListNode(0);
+        RandomListNode copyNode = dummy;
+        
+        //copy all nodes and create mapping
+        while(node != null) {
+            RandomListNode copy = new RandomListNode(node.label);
+            mapping.put(node, copy);
+            copyNode.next = copy;
+            copyNode = copyNode.next;
+            node = node.next;
+        }
+        
+        //copy all random nodes
+        node = head;
+        copyNode = dummy.next;
+        while(node != null) {
+            copyNode.random = mapping.get(node.random);
+            copyNode = copyNode.next;
+            node = node.next;
+        }
+        
+        return dummy.next;
+    }
+}
+```
