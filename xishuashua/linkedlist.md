@@ -322,3 +322,66 @@ class Solution {
     }
 }
 ```
+
+### [L234: Palindrome Linked List](https://leetcode.com/problems/palindrome-linked-list/)
+
+Given a singly linked list, determine if it is a palindrome.
+
+Example 1:
+
+Input: 1->2
+Output: false
+Example 2:
+
+Input: 1->2->2->1
+Output: true
+
+Follow up:
+Could you do it in O(n) time and O(1) space?
+
+```
+class Solution {
+    public boolean isPalindrome(ListNode head) {
+        if(head == null || head.next == null) {
+            return true;
+        }
+        
+        ListNode slow = head;
+        ListNode fast = head;
+        
+        while(fast.next != null && fast.next.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        
+        ListNode headOf2ndHalf = reverseList(slow.next);
+        ListNode curOf2ndHalf = headOf2ndHalf;
+        ListNode curOf1stHalf = head;
+        while(curOf2ndHalf != null) {
+            if(curOf2ndHalf.val != curOf1stHalf.val) {
+                return false;
+            }
+            curOf2ndHalf = curOf2ndHalf.next;
+            curOf1stHalf = curOf1stHalf.next;
+        }
+        
+        return true;
+    }
+    
+    private ListNode reverseList(ListNode head) {
+        if(head == null || head.next == null) {
+            return head;
+        }
+        
+        ListNode prev = null;
+        
+        while(head != null) {
+            ListNode temp = head.next;
+            head.next = prev;
+            prev = head;
+            head = temp;
+        }
+        return prev;
+    }
+}
+```
