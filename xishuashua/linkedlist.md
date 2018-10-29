@@ -206,3 +206,53 @@ public class Solution {
     }
 }
 ```
+
+### [L206: Reverse Linked List](https://leetcode.com/problems/reverse-linked-list/)
+Reverse a singly linked list.
+
+Example:
+
+Input: 1->2->3->4->5->NULL
+Output: 5->4->3->2->1->NULL
+
+Follow up:
+
+A linked list can be reversed either iteratively or recursively. Could you implement both?
+
+```
+class Solution {
+    //Iteration
+    public ListNode reverseList(ListNode head) {
+        if(head == null || head.next == null) {
+            return head;
+        }
+        
+        ListNode prev = null;
+        
+        while(head != null) {
+            ListNode temp = head.next;
+            head.next = prev;
+            prev = head;
+            head = temp;
+        }
+        
+        return prev;
+    }
+    
+    //Recursion
+    public ListNode reverseList(ListNode head) {
+        if(head == null || head.next == null) {
+            return head;
+        }
+        
+        ListNode next = head.next;
+        
+        ListNode newHead = reverseList(head.next);
+        
+        next.next = head;
+        head.next = null;
+        
+        return newHead;
+    }
+}
+```
