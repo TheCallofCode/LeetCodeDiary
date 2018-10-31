@@ -22,6 +22,14 @@ Notes:
 - Depending on your language, queue may not be supported natively. You may simulate a queue by using a list or deque (double-ended queue), as long as you use only standard operations of a queue.
 - You may assume that all operations are valid (for example, no pop or top operations will be called on an empty stack).
 
+*Method 1*
+
+Using 2 queues.
+Time complexity:
+- push(x) - O(1)
+- pop() - O(n)
+- top() - O(1)
+
 ```
 class MyStack {
     private Queue<Integer> container;
@@ -66,9 +74,46 @@ class MyStack {
 }
 ```
 
-Using 2 queues.
+*Method 2*
+
+Using 1 queue.
 Time complexity:
-- push(x) - O(1)
-- pop() - O(n)
+- push(x) - O(n)
+- pop() - O(1)
 - top() - O(1)
 
+```
+class MyStack {
+    private Queue<Integer> container;
+    private int top;
+    /** Initialize your data structure here. */
+    public MyStack() {
+        container = new LinkedList<>();
+    }
+    
+    /** Push element x onto stack. */
+    public void push(int x) {
+        int sizeBeforePush = container.size();
+        container.offer(x);
+        while(sizeBeforePush > 0) {
+            container.offer(container.poll());
+            sizeBeforePush--;
+        }
+    }
+    
+    /** Removes the element on top of the stack and returns that element. */
+    public int pop() {
+        return container.poll();
+    }
+    
+    /** Get the top element. */
+    public int top() {
+        return container.peek();
+    }
+    
+    /** Returns whether the stack is empty. */
+    public boolean empty() {
+        return container.isEmpty();
+    }
+}
+```
