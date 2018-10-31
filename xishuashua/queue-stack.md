@@ -147,7 +147,10 @@ Notes:
 - You may assume that all operations are valid (for example, no pop or peek operations will be called on an empty queue).
 
 #### Solution
-
+Time complexity:
+- push(x) - O(1)
+- pop() - worst case O(n); amortized O(1)
+- peek() - worst case O(n); amortized O(1)
 ```
 class MyQueue {
     Deque<Integer> storeStack;
