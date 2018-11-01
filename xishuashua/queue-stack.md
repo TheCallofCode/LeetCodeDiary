@@ -149,8 +149,14 @@ Notes:
 #### Solution
 Time complexity:
 - push(x) - O(1)
-- pop() - worst case O(n); amortized O(1)
-- peek() - worst case O(n); amortized O(1)
+- pop()
+    - worst case O(n)
+    - best case O(1)
+    - amortized O(1)
+- peek()
+    - worst case O(n)
+    - best case O(1)
+    - amortized O(1)
 ```
 class MyQueue {
     Deque<Integer> storeStack;
@@ -217,6 +223,7 @@ Follow up: Recursive solution is trivial, could you do it iteratively?
 
 #### Solution
 *Method 1: Recursion*
+
 Time complexity: O(n)
 Space complexity: O(logn)
 
