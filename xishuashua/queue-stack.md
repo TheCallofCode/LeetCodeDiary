@@ -245,3 +245,37 @@ class Solution {
     }
 }
 ```
+
+*Method 2: Iteration*
+
+Time complexity: O(n)
+
+Space Complexity: O(logn)
+
+```
+public List<Integer> preorderTraversal(TreeNode root) {
+        List<Integer> result = new ArrayList<>();
+        Deque<TreeNode> stack = new ArrayDeque<>();
+        
+        if(root == null) {
+            return result;
+        }
+        
+        stack.offerFirst(root);
+        
+        while(!stack.isEmpty()) {
+            TreeNode node = stack.pollFirst();
+            result.add(node.val);
+            
+            if(node.right != null) {
+                stack.addFirst(node.right);
+            }
+            
+            if(node.left != null) {
+                stack.addFirst(node.left);
+            }
+        }
+        
+        return result;
+    }
+```
