@@ -279,3 +279,68 @@ public List<Integer> preorderTraversal(TreeNode root) {
         return result;
     }
 ```
+
+### [L20: Valid Parentheses](https://leetcode.com/problems/valid-parentheses/)
+Given a string containing just the characters '(', ')', '{', '}', '\[' and '\]', determine if the input string is valid.
+
+An input string is valid if:
+
+Open brackets must be closed by the same type of brackets.
+Open brackets must be closed in the correct order.
+Note that an empty string is also considered valid.
+
+Example 1:
+
+Input: "()"
+Output: true
+Example 2:
+
+Input: "()\[\]{}"
+Output: true
+Example 3:
+
+Input: "(]"
+Output: false
+Example 4:
+
+Input: "(\[)\]"
+Output: false
+Example 5:
+
+Input: "{\[\]}"
+Output: true
+
+#### Solution
+
+Time complexity: O(n)
+
+Space complexity: O(n)
+
+```
+class Solution {
+    public boolean isValid(String s) {
+        if(s.length() == 0) {
+            return true;
+        }
+        
+        char[] chars = s.toCharArray();
+        Deque<Character> stack = new ArrayDeque<>();
+        Map<Character, Character> mapping = new HashMap<>();
+        mapping.put(')', '(');
+        mapping.put('}', '{');
+        mapping.put(']', '[');
+        
+        for(char c: chars) {
+            if(c == '(' || c == '{' || c == '[') {
+                stack.offerFirst(c);
+            } else {
+                if(stack.pollFirst() != mapping.get(c)) {
+                    return false;
+                }
+            }
+        }
+        
+        return stack.isEmpty();
+    }
+}
+```
