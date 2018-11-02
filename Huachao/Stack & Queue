@@ -1,0 +1,38 @@
+144. Binary Tree Preorder Traversal
+
+Given a binary tree, return the preorder traversal of its nodes' values.
+
+Code: 
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    vector<int> preorderTraversal(TreeNode* root) {
+        vector<int> res;
+        stack<TreeNode*> nodeStack;
+        while (root || !nodeStack.empty()){
+            if (root) {
+                res.push_back(root->val);
+                nodeStack.push(root);
+                root = root->left;
+            }
+            else{
+                TreeNode* top = nodeStack.top();
+                nodeStack.pop();
+                if (top->right){
+                    root = top->right;
+                }
+            }            
+            
+        }
+        
+        return res;
+    }
+};
