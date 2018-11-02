@@ -445,7 +445,7 @@ minStack.getMin();   --> Returns -2.
 ```
 class MinStack {
     Deque<Integer> stack;
-    Deque<Integer> globalMin = new ArrayDeque<>();
+    Deque<Integer> globalMin;
     
     /** initialize your data structure here. */
     public MinStack() {
