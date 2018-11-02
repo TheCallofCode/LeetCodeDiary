@@ -36,3 +36,53 @@ public:
         return res;
     }
 };
+
+145. Binary Tree Postorder Traversal
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    vector<int> postorderTraversal(TreeNode* root) {
+        vector<int> res;
+        stack<TreeNode*> myStack;
+        TreeNode* last = NULL;
+        while(root || !myStack.empty()){
+            if (root){
+                if (root->left){
+                    myStack.push(root);
+                    root = root->left;
+                }
+                else if (root->right){                    
+                    myStack.push(root);
+                    root = root->right;
+                }
+                else{
+                    res.push_back(root->val);
+                    last = root;
+                    root = NULL;
+                }
+            }
+            else{
+                TreeNode* top = myStack.top();                
+                if (top->right && top->right != last){
+                    root = top->right;
+                }
+                else{
+                    res.push_back(top->val);
+                    last = top;
+                    myStack.pop();
+                }
+            }
+        }
+        
+        return res;
+    }
+};
