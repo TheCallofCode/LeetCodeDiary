@@ -145,3 +145,107 @@ public:
         return myStack.top();
     }
 };
+
+
+class MyStack {
+private:
+    queue<int> _queue;
+    
+public:
+    /** Initialize your data structure here. */
+    MyStack() {
+        
+    }
+    
+    /** Push element x onto stack. */
+    void push(int x) {
+        _queue.push(x);
+    }
+    
+    /** Removes the element on top of the stack and returns that element. */
+    int pop() {
+        int res = _queue.back();
+                    
+        int n = _queue.size();
+        for (int i = 0; i < n; i++){
+            if (i < n - 1) _queue.push(_queue.front());
+            _queue.pop();
+        }
+        
+        return res;
+    }
+    
+    /** Get the top element. */
+    int top() {
+        return _queue.back();
+    }
+    
+    /** Returns whether the stack is empty. */
+    bool empty() {
+        return _queue.empty();
+    }
+};
+
+/**
+ * Your MyStack object will be instantiated and called as such:
+ * MyStack obj = new MyStack();
+ * obj.push(x);
+ * int param_2 = obj.pop();
+ * int param_3 = obj.top();
+ * bool param_4 = obj.empty();
+ */
+ 
+ class MyStack {
+private:
+    queue<int> _queue;
+    
+public:
+    /** Initialize your data structure here. */
+    MyStack() {
+        
+    }
+    
+    /** Push element x onto stack. */
+    void push(int x) {
+        _queue.push(x);
+    }
+    
+    /** Removes the element on top of the stack and returns that element. */
+    int pop() {
+        
+        int res = _queue.back();
+        queue<int> _new;
+            
+        int n = _queue.size();
+        for (int i = 0; i < n; i++){
+            if (i < n - 1) _new.push(_queue.front());
+            _queue.pop();
+        }
+        
+        for (int i = 0; i < n-1; i++){
+            _queue.push(_new.front());
+            _new.pop();
+        }
+        
+        return res;
+    }
+    
+    /** Get the top element. */
+    int top() {
+        return _queue.back();
+    }
+    
+    /** Returns whether the stack is empty. */
+    bool empty() {
+        return _queue.empty();
+    }
+};
+
+/**
+ * Your MyStack object will be instantiated and called as such:
+ * MyStack obj = new MyStack();
+ * obj.push(x);
+ * int param_2 = obj.pop();
+ * int param_3 = obj.top();
+ * bool param_4 = obj.empty();
+ */
